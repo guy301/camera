@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mBtLaunchActivity;
 
-    int i = 0;
+    int f = 1;
+
 
 
     @Override
