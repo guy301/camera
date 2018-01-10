@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     String datapath = "";
     Intent GalIntent, CamIntent, CropIntent;
 
-    // hi sap how
+    // hi sap how f
     private Button mBtLaunchActivity;
 
     int i = 1;
