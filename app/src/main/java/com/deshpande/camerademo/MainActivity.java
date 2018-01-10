@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -37,15 +38,26 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private Uri file;
     String datapath = "";
+    Bundle bundle;
+    Bitmap bitmap;
     Intent GalIntent, CamIntent, CropIntent;
 
 
     private Button mBtLaunchActivity;
 
-    int f = 1;
 
+    private void launchActivity_OCR(View view) {
 
+//        Intent intent = new Intent(this, OCR.class);
+//        intent.putExtra("pic",bundle);
+//        startActivity(intent);
 
+        Intent i = new Intent(this, OCR.class);
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+        i.putExtra("byteArray", bs.toByteArray());
+        startActivity(i);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,17 +78,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                launchActivity();
+                launchActivity_OCR(view);
             }
         });
     }
 
 
-    private void launchActivity() {
-
-        Intent intent = new Intent(this, OCR.class);
-        startActivity(intent);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -94,11 +101,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(GalIntent, "select image from Gallery"), 2);
     }
 
-    private void launchActivity(View view) {
 
-        Intent intent = new Intent(this, OCR.class);
-        startActivity(intent);
-    }
 
 
     public void takePicture(View view) {
@@ -143,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
             else if (requestCode == 1)//finished cropping
             {
                 if(data != null){
-                    Bundle bundle = data.getExtras();
-                    Bitmap bitmap = bundle.getParcelable("data");
+                    bundle = data.getExtras();
+                    bitmap = bundle.getParcelable("data");
                     //imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     imageView.setImageBitmap(bitmap);
                     File f = new File(file.getPath());///////////
 
-                    if (f.exists()) f.delete();/////////////
+                    //if (f.exists()) f.delete();/////////////
 
 
                 }
