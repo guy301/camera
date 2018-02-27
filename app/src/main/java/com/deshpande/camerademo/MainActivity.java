@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+    
     public void gallery(View view)
     {
         GalIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
